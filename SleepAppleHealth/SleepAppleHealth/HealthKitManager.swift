@@ -30,7 +30,8 @@ class HealthKitManager: ObservableObject {
         }
         healthStore.requestAuthorization(toShare: [], read: [sleepType]) { [weak self] success, error in
             DispatchQueue.main.async {
-                self?.authorizationStatus = self?.healthStore.authorizationStatus(for: self!.sleepType) ?? .notDetermined
+                guard let self = self else { return }
+                self.authorizationStatus = self.healthStore.authorizationStatus(for: self.sleepType)
             }
             completion(success, error)
         }
